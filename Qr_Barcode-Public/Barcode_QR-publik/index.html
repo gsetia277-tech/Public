@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Website Absensi</title>
+  <style>
+    body{font-family:arial;background:#f0f0f0;margin:0}
+    .judul{background:#04aa6d;color:#fff;padding:10px;text-align:center;border-radius: 10px;margin-top: 10px;}
+    .box{background:#fff;margin:10px;padding:10px;border:1px solid #ccc}
+    table{width:100%;border-collapse:collapse}
+    th,td{border:1px solid #aaa;padding:5px}
+    th{background:#04aa6d;color:#fff}
+    .btn{background:#04aa6d;color:#fff;border:none;padding:6px 12px;cursor:pointer}
+    .btn:hover{opacity:.8}
+    .nav{text-align:center;margin:10px}
+    .nav a{color:#04aa6d;font-weight:bold;margin:0 8px}
+    .footer{margin-top: 630px;text-align: center;background-color: #04aa6d;color: #fff; padding: 5px;margin-bottom: 20px;}
+  </style>
+</head>
+<body>
+  <div class="judul">
+    <h1>ABSENSI SISWA</h1>
+  </div>
+  <div class="nav">
+    <a href="QR_Code.html">Buat QR siswa</a>
+    <a href="Scan_QR.html">Buka pemindai</a>
+  </div>
+  
+    <div class="box">
+      <div id="info">Total hadir: 0</div>
+  </div>
+  <div class="box">
+    <table>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Tanggal</th>
+          <th>Jam</th>
+          <th>Nama</th>
+          <th>Kelas</th>
+          <th>Hapus</th>
+        </tr>
+      </thead>
+      <tbody id="tBody"></tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    <h1>SMK PASUNDAN BANJARAN</h1>
+  </div>
+
+  <script>
+    const tBody = document.getElementById('tBody');
+    const info = document.getElementById('info');
+
+    async function live(){
+      const today = new Date().toISOString().slice(0,10);
+      const r = await fetch(`/api/absensi?tanggal=${today}`);
+      const rows = await r.json();
+      info.textContent = `Total hadir: ${rows.length}`;
+      let no = 1;
+      tBody.innerHTML = rows.map(s=>`
+        <tr>
+          <td>${no++}</td>
+          <td>${s.tanggal}</td>
+          <td>${s.jam}</td>
+          <td>${s.nama}</td>
+          <td>${s.kelas}</td>
+          <td><button class="btn" onclick="hapus(${s.absen_id})">Hapus</button></td>
+        </tr>`).join('');
+    }
+
+    async function hapus(id){
+      if(!confirm('Hapus absen ini?')) return;
+      await fetch(`/api/absensi/${id}`, {method:'DELETE', headers:{'x-api-key':'absen2026'}});
+      live();
+    }
+
+    setInterval(live, 1000);
+  </script>
+</body>
+</html>

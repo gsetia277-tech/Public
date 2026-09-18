@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Scan Absensi</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <style>
+    body{margin:0;font-family:system-ui;background:#363636;color:#fff}
+    #reader{width:100%;max-width:400px;margin:auto}
+    #result{text-align:center;margin-top:1em;font-size:1.2em}
+    #demoButton{display:none;margin:1em auto;padding:.7em 1em;border:0;border-radius:6px;background:#04aa6d;color:#fff;cursor:pointer}
+
+    .body {
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="reader"></div>
+  <div id="result">Arahkan kamera ke QR Code</div>
+  <button id="demoButton" type="button">Simulasikan scan SISWA-001</button>
+
+  <script>
+    const resultDiv = document.getElementById('result');
+    const demoMode = new URLSearchParams(location.search).get('mode') === 'test';
+    const demoButton = document.getElementById('demoButton');
+    let last = '';
+    function onScanSuccess(decodedText) {
+      if (decodedText === last) return;
+      last = decodedText;
+      if (demoMode) {
+        resultDiv.textContent = `Mode uji berhasil: ${decodedText}`;
+        return;
+      }
+      fetch('/api/absen', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': 'absen2026'
+        },
+        body: JSON.stringify({ qr_id: decodedText })
+      })
+      .then(r => r.json())
+      .then(data => {
+        resultDiv.textContent = data.message;
+        setTimeout(() => { last = ''; resultDiv.textContent = 'Arahkan kamera ke QR Code'; }, 2500);
+      })
+      .catch(() => {
+        resultDiv.textContent = 'Gagal konek server';
+        last = '';
+      });
+    }
+    if (demoMode) {
+      demoButton.style.display = 'block';
+      demoButton.addEventListener('click', () => {
+        last = '';
+        onScanSuccess('SISWA-001');
+      });
+    }
+    const html5QrCode = new Html5Qrcode("reader");
+    html5QrCode.start({ facingMode: "environment" }, { fps: 10, qrbox: 250 }, onScanSuccess);
+  </script>
+</body>
+</html>
