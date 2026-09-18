@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ruang kreatif gsetia. Jelajahi proyek website, cerita di balik kode, dan mari terhubung.">
+  <meta name="theme-color" content="#f7f7f2">
+  <title>gsetia — Kode, karya, dan cerita.</title>
+  <link rel="icon" type="image/png" href="img/profil-G.png">
+  <link rel="stylesheet" href="style.css">
+  <script src="Javascript.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Langsung ke konten</a>
+  <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="icon-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10H3Z M9 20v-7h6v7"/></symbol>
+    <symbol id="icon-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></symbol>
+    <symbol id="icon-chat" viewBox="0 0 24 24"><path d="M21 11.5a9 9 0 0 1-9 9 10 10 0 0 1-4-.9L3 21l1.4-5A9 9 0 1 1 21 11.5Z M8 11h8 M8 15h5"/></symbol>
+    <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+    <symbol id="icon-up-right" viewBox="0 0 24 24"><path d="M6 18 18 6M6 6h12v12"/></symbol>
+    <symbol id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></symbol>
+    <symbol id="icon-moon" viewBox="0 0 24 24"><path d="M21 13a9 9 0 0 1-10-10A9 9 0 1 0 21 13Z"/></symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="icon-code" viewBox="0 0 24 24"><path d="m7 6-6 6 6 6m10-12 6 6-6 6M14 3l-4 18"/></symbol>
+    <symbol id="icon-headphones" viewBox="0 0 24 24"><path d="M3 15v-3a9 9 0 0 1 18 0v3"/><rect x="3" y="12" width="4" height="8" rx="2"/><rect x="17" y="12" width="4" height="8" rx="2"/></symbol>
+  </svg>
+
+  <aside class="sidebar" aria-label="Navigasi utama">
+    <div class="brand-row">
+      <a class="brand" href="#home" aria-label="gsetia, kembali ke beranda">
+        <img src="img/profil-G.png" alt="" width="42" height="42">
+        <span>gsetia<span class="brand-dot">.</span></span>
+      </a>
+      <button class="icon-button menu-toggle" id="menu-toggle" type="button" aria-label="Buka navigasi" aria-controls="sidebar-content" aria-expanded="false" hidden>
+        <svg class="icon" aria-hidden="true"><use href="#icon-menu"/></svg>
+      </button>
+    </div>
+    <div class="sidebar-content" id="sidebar-content">
+      <p class="sidebar-caption">PERSONAL SPACE / 2026</p>
+      <nav class="navigation" aria-label="Menu halaman">
+        <a class="nav-link is-active" href="#home" aria-current="location"><svg class="icon" aria-hidden="true"><use href="#icon-home"/></svg>Beranda<span class="nav-number">01</span></a>
+        <a class="nav-link" href="#projects"><svg class="icon" aria-hidden="true"><use href="#icon-grid"/></svg>Karya<span class="nav-number">02</span></a>
+        <a class="nav-link" href="#about"><svg class="icon" aria-hidden="true"><use href="#icon-user"/></svg>Tentang<span class="nav-number">03</span></a>
+        <a class="nav-link" href="#contact"><svg class="icon" aria-hidden="true"><use href="#icon-chat"/></svg>Kontak<span class="nav-number">04</span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="music-link" href="https://open.spotify.com/user/31zwjq6mvebbtv43fy6ydv7nfeim" target="_blank" rel="noopener noreferrer">
+          <svg class="icon" aria-hidden="true"><use href="#icon-headphones"/></svg>
+          <span><small>TEMAN NGODING</small>Temukan musik saya</span>
+          <svg class="icon small-icon" aria-hidden="true"><use href="#icon-up-right"/></svg>
+        </a>
+        <div class="sidebar-note"><span class="status-dot"></span> Selalu ada hal baru untuk dibuat.</div>
+        <div class="sidebar-footer"><span>Made with curiosity.</span><button class="icon-button theme-toggle" id="theme-toggle" type="button" aria-label="Aktifkan tema gelap" aria-pressed="false" hidden><svg class="icon theme-moon" aria-hidden="true"><use href="#icon-moon"/></svg><svg class="icon theme-sun" aria-hidden="true"><use href="#icon-sun"/></svg></button></div>
+      </div>
+    </div>
+  </aside>
+
+  <main id="main" class="main-content" tabindex="-1">
+    <header class="topbar"><span>PORTOFOLIO PERSONAL</span><a href="#contact">Mari terhubung <svg class="icon small-icon" aria-hidden="true"><use href="#icon-up-right"/></svg></a></header>
+
+    <section class="hero section" id="home" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="status-dot"></span> HALO, SAYA GSETIA</p>
+        <h1 id="hero-title">Sedikit kode.<br>Banyak<br><span>kemungkinan.</span></h1>
+        <p class="hero-description">Selamat datang di sudut kecil saya di internet. Tempat ide, rasa penasaran, dan baris kode bertemu menjadi karya.</p>
+        <div class="hero-actions"><a class="button button-primary" href="#projects">Jelajahi karya <svg class="icon" aria-hidden="true"><use href="#icon-arrow"/></svg></a><a class="text-link" href="#about">Kenalan dulu <span aria-hidden="true">↗</span></a></div>
+        <div class="hero-footnote"><span class="tiny-star" aria-hidden="true">✳</span> Belajar. Membuat. Berkembang.</div>
+      </div>
+      <div class="hero-visual" role="img" aria-label="Ilustrasi ruang kerja kreatif gsetia dengan jendela browser dan potongan kode">
+        <div class="visual-grid"></div>
+        <span class="visual-index">A LITTLE CREATIVE SPACE</span>
+        <div class="browser-art">
+          <div class="browser-toolbar"><span class="window-dots"><i></i><i></i><i></i></span><span>gsetia.space</span><span>↗</span></div>
+          <div class="browser-canvas"><span class="canvas-caption">IDEAS INTO PIXELS</span><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><span class="art-letter">g<span>.</span></span><span class="canvas-bottom">CREATE SOMETHING<br>THAT FEELS LIKE YOU.</span><span class="art-asterisk">✳</span></div>
+        </div>
+        <div class="code-note"><span class="code-comment">// one idea at a time</span><code><span>const</span> happy = () =&gt; {<br>&nbsp; return <em>'keep creating'</em>;<br>};</code></div>
+        <span class="floating-label"><span class="status-dot"></span> code very happy</span>
+        <span class="visual-coordinate">EST. 2026 &nbsp; / &nbsp; ALWAYS EXPLORING</span>
+      </div>
+    </section>
+
+    <div class="tool-strip" aria-label="Teknologi yang digunakan"><span>DIBUAT DENGAN</span><div><b><span class="tool-symbol">&lt;/&gt;</span> HTML</b><b><span class="tool-symbol">#</span> CSS</b><b><span class="tool-symbol">{ }</span> JavaScript</b><b><span class="tool-symbol">&lt;?</span> PHP</b></div></div>
+
+    <section class="section projects-section" id="projects" aria-labelledby="projects-title">
+      <div class="section-heading"><div><p class="eyebrow">01 / KARYA PILIHAN</p><h2 id="projects-title">Dari ide, jadi karya<span>.</span></h2></div><span class="section-aside">Ruang untuk mencoba &amp; mencipta</span></div>
+      <div class="project-grid">
+        <article class="project-card">
+          <a class="project-preview linktree-preview" href="../fortopolio/index.html" aria-label="Buka proyek Personal Linktree">
+            <span class="preview-label">01 / PERSONAL PROJECT</span><span class="preview-spark spark-one" aria-hidden="true">✳</span><span class="preview-spark spark-two" aria-hidden="true">✦</span>
+            <div class="mini-linktree" aria-hidden="true"><div class="mini-avatar">g.</div><strong>gsetia</strong><small>code very happy</small><span>Portfolio <b>↗</b></span><span>Playlist <b>♫</b></span><span>Let's connect <b>↗</b></span><div class="mini-socials">● &nbsp; ● &nbsp; ● &nbsp; ●</div></div>
+            <span class="preview-open"><svg class="icon" aria-hidden="true"><use href="#icon-up-right"/></svg></span>
+          </a>
+          <div class="project-info"><div class="project-title-row"><h3><a href="../fortopolio/index.html">Personal Linktree</a></h3><span class="project-year">2026</span></div><p>Satu tempat untuk tautan, musik, dan koneksi.</p><div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div></div>
+        </article>
+        <article class="project-card">
+          <a class="project-preview portfolio-preview" href="#about" aria-label="Kenali proyek Creative Portfolio">
+            <span class="preview-label">02 / YOU ARE HERE</span>
+            <div class="mini-portfolio" aria-hidden="true"><div class="mini-portfolio-sidebar"><b>g.</b><span></span><span></span><span></span><i>© 2026</i></div><div class="mini-portfolio-main"><div class="mini-topline">PERSONAL SPACE <span>↗</span></div><strong>Small ideas.<br>Endless<br><em>possibilities.</em></strong><div class="mini-orange-button"></div><div class="mini-bottom-blocks"><span></span><span></span></div></div><span class="mini-sticker">✳</span></div>
+            <span class="preview-open"><svg class="icon" aria-hidden="true"><use href="#icon-up-right"/></svg></span>
+          </a>
+          <div class="project-info"><div class="project-title-row"><h3><a href="#about">Creative Portfolio</a></h3><span class="project-year">2026</span></div><p>Rumah digital untuk karya dan cerita di baliknya.</p><div class="tags"><span>Responsive</span><span>JavaScript</span><span>PHP</span></div></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section about-section" id="about" aria-labelledby="about-title">
+      <div class="about-intro"><p class="eyebrow">02 / DI BALIK LAYAR</p><h2 id="about-title">Berawal dari<br>rasa penasaran<span>.</span></h2><p>Saya gsetia. Saya suka menjelajahi bagaimana sebuah ide bisa hidup di browser—mulai dari struktur sederhana sampai detail kecil yang membuatnya terasa berbeda.</p><p>Website ini adalah ruang untuk bereksperimen, menyimpan karya, dan berbagi perjalanan belajar. Satu baris kode, satu hal baru, setiap harinya.</p><a class="text-link" href="#contact">Ayo bertukar ide <svg class="icon small-icon" aria-hidden="true"><use href="#icon-arrow"/></svg></a></div>
+      <div class="about-notes"><div class="note-heading"><svg class="icon" aria-hidden="true"><use href="#icon-code"/></svg><span>CATATAN KECIL SAYA</span><span aria-hidden="true">↘</span></div><div class="interest-row"><span>01</span><div><h3>Rapi di balik layar</h3><p>Struktur yang jelas membuat ide lebih mudah dikembangkan.</p></div></div><div class="interest-row"><span>02</span><div><h3>Nyaman di setiap layar</h3><p>Pengalaman yang terasa pas, dari ponsel hingga desktop.</p></div></div><div class="interest-row"><span>03</span><div><h3>Selalu bereksperimen</h3><p>Mencoba hal baru, menikmati proses, dan terus belajar.</p></div></div><div class="note-signature">a work in progress, always. <span aria-hidden="true">✳</span></div></div>
+    </section>
+
+    <section class="section contact-section" id="contact" aria-labelledby="contact-title"><div class="contact-decoration" aria-hidden="true">✳</div><p class="eyebrow">03 / LET'S CONNECT</p><h2 id="contact-title">Ide bagus dimulai<br>dari sebuah <span>halo.</span></h2><p>Punya ide, ingin berkolaborasi, atau sekadar menyapa?<br>Mari mulai percakapan.</p><div class="contact-actions"><a class="button button-dark" href="https://discord.com/users/1403013574821150791" target="_blank" rel="noopener noreferrer">Sapa di Discord <svg class="icon" aria-hidden="true"><use href="#icon-up-right"/></svg></a><a class="contact-link" href="../fortopolio/index.html">Kunjungi Linktree <svg class="icon small-icon" aria-hidden="true"><use href="#icon-up-right"/></svg></a></div></section>
+
+    <footer class="site-footer"><span>© <span id="year">2026</span> gsetia. Dibuat dengan rasa penasaran.</span><a href="#home">Kembali ke atas <span aria-hidden="true">↑</span></a></footer>
+  </main>
+</body>
+</html>
