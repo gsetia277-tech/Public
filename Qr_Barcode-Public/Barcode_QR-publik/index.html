@@ -23,7 +23,7 @@
   </div>
   <div class="nav">
     <a href="QR_Code.html">Buat QR siswa</a>
-    <a href="Scan_QR.html">Buka pemindai</a>
+    <a href="Scan_QR.html" target="_blank" rel="noopener">Buka pemindai</a>
   </div>
   
     <div class="box">
@@ -55,8 +55,11 @@
 
     async function live(){
       const today = new Date().toISOString().slice(0,10);
-      const r = await fetch(`/api/absensi?tanggal=${today}`);
-      const rows = await r.json();
+      let rows = JSON.parse(localStorage.getItem('absensi') || '[]').filter(s => s.tanggal === today);
+      try {
+        const r = await fetch(`../api.php?action=absensi&tanggal=${today}`);
+        if (r.ok) rows = await r.json();
+      } catch (_) { }
       info.textContent = `Total hadir: ${rows.length}`;
       let no = 1;
       tBody.innerHTML = rows.map(s=>`
@@ -72,7 +75,9 @@
 
     async function hapus(id){
       if(!confirm('Hapus absen ini?')) return;
-      await fetch(`/api/absensi/${id}`, {method:'DELETE', headers:{'x-api-key':'absen2026'}});
+      const localRows = JSON.parse(localStorage.getItem('absensi') || '[]').filter(s => s.absen_id !== id);
+      localStorage.setItem('absensi', JSON.stringify(localRows));
+      try { await fetch(`../api.php?action=absensi&id=${id}`, {method:'DELETE', headers:{'x-api-key':'absen2026'}}); } catch (_) { }
       live();
     }
 

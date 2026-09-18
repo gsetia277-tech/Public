@@ -28,35 +28,41 @@
 <body>
   <main>
     <h1>QR Absensi</h1>
-    <p>Buat QR siswa untuk diuji dengan halaman pemindai.</p>
-    <label for="qrValue">ID QR siswa</label>
-    <input id="qrValue" class="field" value="SISWA-001" autocomplete="off" spellcheck="false">
+    <p>Buat QR teman untuk diuji dengan halaman pemindai.</p>
+    <label for="qrValue">Nama teman</label>
+    <input id="qrValue" class="field" value="Nama Teman" autocomplete="off" spellcheck="false">
+    <label for="classValue">Kelas</label>
+    <input id="classValue" class="field" value="XII RPL" autocomplete="off" spellcheck="false">
     <div id="qrcode" aria-label="QR code siswa"></div>
     <output id="status" aria-live="polite"></output>
     <div class="actions">
       <button id="download" type="button">Unduh PNG</button>
-      <a href="Scan_QR.html?mode=test">Buka pemindai</a>
+      <a href="Scan_QR.html" target="_blank" rel="noopener">Buka pemindai</a>
     </div>
   </main>
   <script>
     const valueInput = document.getElementById('qrValue');
     const qrElement = document.getElementById('qrcode');
+    const classInput = document.getElementById('classValue');
     const status = document.getElementById('status');
     let qrCode;
 
     function renderQr() {
-      const value = valueInput.value.trim() || 'SISWA-001';
+      const value = valueInput.value.trim() || 'Nama Teman';
+      const className = classInput.value.trim() || 'XII RPL';
+      const payload = JSON.stringify({ nama: value, kelas: className });
       qrElement.replaceChildren();
-      qrCode = new QRCode(qrElement, { text: value, width: 210, height: 210, correctLevel: QRCode.CorrectLevel.M });
-      status.textContent = `Isi QR: ${value}`;
+      qrCode = new QRCode(qrElement, { text: payload, width: 210, height: 210, correctLevel: QRCode.CorrectLevel.M });
+      status.textContent = `QR: ${value} - ${className}`;
     }
 
     valueInput.addEventListener('input', renderQr);
+    classInput.addEventListener('input', renderQr);
     document.getElementById('download').addEventListener('click', () => {
       const image = qrElement.querySelector('img');
       if (!image) return;
       const link = document.createElement('a');
-      link.download = `qr-${valueInput.value.trim() || 'siswa-001'}.png`;
+      link.download = `qr-${valueInput.value.trim() || 'nama-teman'}.png`;
       link.href = image.src;
       link.click();
     });

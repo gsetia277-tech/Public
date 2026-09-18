@@ -19,7 +19,7 @@
 <body>
   <div id="reader"></div>
   <div id="result">Arahkan kamera ke QR Code</div>
-  <button id="demoButton" type="button">Simulasikan scan SISWA-001</button>
+  <button id="demoButton" type="button">Simulasikan scan Nama Teman</button>
 
   <script>
     const resultDiv = document.getElementById('result');
@@ -29,11 +29,10 @@
     function onScanSuccess(decodedText) {
       if (decodedText === last) return;
       last = decodedText;
-      if (demoMode) {
-        resultDiv.textContent = `Mode uji berhasil: ${decodedText}`;
-        return;
-      }
-      fetch('/api/absen', {
+      let student = { nama: decodedText, kelas: '-' };
+      try { student = JSON.parse(decodedText); } catch (_) { }
+      saveLocalAttendance(student);
+      fetch('../api.php?action=absen', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -43,19 +42,33 @@
       })
       .then(r => r.json())
       .then(data => {
-        resultDiv.textContent = data.message;
-        setTimeout(() => { last = ''; resultDiv.textContent = 'Arahkan kamera ke QR Code'; }, 2500);
+        finishScan(student, data.message || 'Berhasil tersimpan');
       })
       .catch(() => {
-        resultDiv.textContent = 'Gagal konek server';
-        last = '';
+        finishScan(student, 'Tersimpan lokal');
       });
+    }
+    function finishScan(student, message) {
+      resultDiv.textContent = `${message}: ${student.nama}. Membuka daftar absensi...`;
+      setTimeout(() => { location.href = 'index.html?scan=success'; }, 700);
+    }
+    function saveLocalAttendance(student) {
+      const attendance = JSON.parse(localStorage.getItem('absensi') || '[]');
+      const now = new Date();
+      attendance.push({
+        absen_id: Date.now(),
+        tanggal: now.toISOString().slice(0, 10),
+        jam: now.toLocaleTimeString('id-ID'),
+        nama: student.nama || 'Nama Teman',
+        kelas: student.kelas || '-'
+      });
+      localStorage.setItem('absensi', JSON.stringify(attendance));
     }
     if (demoMode) {
       demoButton.style.display = 'block';
       demoButton.addEventListener('click', () => {
         last = '';
-        onScanSuccess('SISWA-001');
+        onScanSuccess(JSON.stringify({ nama: 'Nama Teman', kelas: 'XII RPL' }));
       });
     }
     const html5QrCode = new Html5Qrcode("reader");
