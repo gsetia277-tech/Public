@@ -4,26 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>QR Absensi</title>
+  <link rel="stylesheet" href="../css/qr-code.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <style>
-    :root { color-scheme: light; --green: #087f5b; --ink: #17312b; --paper: #f7fbf8; }
-    * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px; font-family: Georgia, serif; color: var(--ink); background: radial-gradient(circle at top left, #d8f3dc, transparent 42%), var(--paper); }
-    main { width: min(100%, 480px); background: #fff; border: 1px solid #cde4d5; border-radius: 16px; padding: clamp(24px, 6vw, 44px); box-shadow: 0 18px 50px #1749361c; text-align: center; }
-    h1 { margin: 0 0 8px; font-size: clamp(1.8rem, 6vw, 2.6rem); }
-    p { color: #527066; margin: 0 0 24px; }
-    label { display: block; margin-bottom: 8px; text-align: left; font: 600 0.9rem system-ui, sans-serif; }
-    .field { width: 100%; padding: 13px 14px; border: 1px solid #b8d4c1; border-radius: 8px; font: 1rem system-ui, sans-serif; color: var(--ink); }
-    .field:focus { outline: 3px solid #b7e4c7; border-color: var(--green); }
-    #qrcode { width: 230px; height: 230px; margin: 28px auto 18px; padding: 10px; border: 1px solid #d8e9dd; border-radius: 8px; display: grid; place-items: center; }
-    #qrcode img { max-width: 100%; }
-    output { display: block; min-height: 1.4em; margin-bottom: 18px; font: 600 0.95rem system-ui, sans-serif; overflow-wrap: anywhere; }
-    .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-    a, button { border: 0; border-radius: 8px; padding: 11px 16px; font: 600 0.9rem system-ui, sans-serif; cursor: pointer; text-decoration: none; }
-    button { background: var(--green); color: #fff; }
-    a { background: #e7f4ea; color: var(--green); }
-    button:hover, a:hover { filter: brightness(0.94); }
-  </style>
 </head>
 <body>
   <main>
@@ -40,33 +22,6 @@
       <a href="Scan_QR.html" target="_blank" rel="noopener">Buka pemindai</a>
     </div>
   </main>
-  <script>
-    const valueInput = document.getElementById('qrValue');
-    const qrElement = document.getElementById('qrcode');
-    const classInput = document.getElementById('classValue');
-    const status = document.getElementById('status');
-    let qrCode;
-
-    function renderQr() {
-      const value = valueInput.value.trim() || 'Nama Teman';
-      const className = classInput.value.trim() || 'XII RPL';
-      const payload = JSON.stringify({ nama: value, kelas: className });
-      qrElement.replaceChildren();
-      qrCode = new QRCode(qrElement, { text: payload, width: 210, height: 210, correctLevel: QRCode.CorrectLevel.M });
-      status.textContent = `QR: ${value} - ${className}`;
-    }
-
-    valueInput.addEventListener('input', renderQr);
-    classInput.addEventListener('input', renderQr);
-    document.getElementById('download').addEventListener('click', () => {
-      const image = qrElement.querySelector('img');
-      if (!image) return;
-      const link = document.createElement('a');
-      link.download = `qr-${valueInput.value.trim() || 'nama-teman'}.png`;
-      link.href = image.src;
-      link.click();
-    });
-    renderQr();
-  </script>
+  <script src="../js/QR_Barcode.js" defer></script>
 </body>
 </html>

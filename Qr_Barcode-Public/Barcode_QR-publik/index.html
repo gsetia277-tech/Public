@@ -3,19 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <title>Website Absensi</title>
-  <style>
-    body{font-family:arial;background:#f0f0f0;margin:0}
-    .judul{background:#04aa6d;color:#fff;padding:10px;text-align:center;border-radius: 10px;margin-top: 10px;}
-    .box{background:#fff;margin:10px;padding:10px;border:1px solid #ccc}
-    table{width:100%;border-collapse:collapse}
-    th,td{border:1px solid #aaa;padding:5px}
-    th{background:#04aa6d;color:#fff}
-    .btn{background:#04aa6d;color:#fff;border:none;padding:6px 12px;cursor:pointer}
-    .btn:hover{opacity:.8}
-    .nav{text-align:center;margin:10px}
-    .nav a{color:#04aa6d;font-weight:bold;margin:0 8px}
-    .footer{margin-top: 630px;text-align: center;background-color: #04aa6d;color: #fff; padding: 5px;margin-bottom: 20px;}
-  </style>
+  <link rel="stylesheet" href="../css/absensi.css">
 </head>
 <body>
   <div class="judul">
@@ -49,39 +37,6 @@
     <h1>SMK PASUNDAN BANJARAN</h1>
   </div>
 
-  <script>
-    const tBody = document.getElementById('tBody');
-    const info = document.getElementById('info');
-
-    async function live(){
-      const today = new Date().toISOString().slice(0,10);
-      let rows = JSON.parse(localStorage.getItem('absensi') || '[]').filter(s => s.tanggal === today);
-      try {
-        const r = await fetch(`../api.php?action=absensi&tanggal=${today}`);
-        if (r.ok) rows = await r.json();
-      } catch (_) { }
-      info.textContent = `Total hadir: ${rows.length}`;
-      let no = 1;
-      tBody.innerHTML = rows.map(s=>`
-        <tr>
-          <td>${no++}</td>
-          <td>${s.tanggal}</td>
-          <td>${s.jam}</td>
-          <td>${s.nama}</td>
-          <td>${s.kelas}</td>
-          <td><button class="btn" onclick="hapus(${s.absen_id})">Hapus</button></td>
-        </tr>`).join('');
-    }
-
-    async function hapus(id){
-      if(!confirm('Hapus absen ini?')) return;
-      const localRows = JSON.parse(localStorage.getItem('absensi') || '[]').filter(s => s.absen_id !== id);
-      localStorage.setItem('absensi', JSON.stringify(localRows));
-      try { await fetch(`../api.php?action=absensi&id=${id}`, {method:'DELETE', headers:{'x-api-key':'absen2026'}}); } catch (_) { }
-      live();
-    }
-
-    setInterval(live, 1000);
-  </script>
+  <script src="../js/absensi.js" defer></script>
 </body>
 </html>

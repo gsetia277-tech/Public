@@ -11,7 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-$database = new PDO('sqlite:' . __DIR__ . DIRECTORY_SEPARATOR . 'absensi.sqlite');
+$databaseDirectory = __DIR__ . DIRECTORY_SEPARATOR . 'Databases';
+if (!is_dir($databaseDirectory)) {
+    mkdir($databaseDirectory, 0775, true);
+}
+$database = new PDO('sqlite:' . $databaseDirectory . DIRECTORY_SEPARATOR . 'absensi.sqlite');
 $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $database->exec(
     'CREATE TABLE IF NOT EXISTS absensi (

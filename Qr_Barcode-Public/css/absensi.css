@@ -1,0 +1,11 @@
+body { font-family: Arial, sans-serif; background: #f0f0f0; margin: 0; }
+.judul { background: #04aa6d; color: #fff; padding: 10px; text-align: center; border-radius: 10px; margin-top: 10px; }
+.box { background: #fff; margin: 10px; padding: 10px; border: 1px solid #ccc; }
+table { width: 100%; border-collapse: collapse; }
+th, td { border: 1px solid #aaa; padding: 5px; }
+th { background: #04aa6d; color: #fff; }
+.btn { background: #04aa6d; color: #fff; border: none; padding: 6px 12px; cursor: pointer; }
+.btn:hover { opacity: .8; }
+.nav { text-align: center; margin: 10px; }
+.nav a { color: #04aa6d; font-weight: bold; margin: 0 8px; }
+.footer { margin-top: 630px; text-align: center; background-color: #04aa6d; color: #fff; padding: 5px; margin-bottom: 20px; }

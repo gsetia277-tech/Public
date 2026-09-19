@@ -1,0 +1,5 @@
+body { margin: 0; font-family: system-ui, sans-serif; background: #363636; color: #fff; }
+#reader { width: 100%; max-width: 400px; margin: auto; }
+#result { text-align: center; margin-top: 1em; font-size: 1.2em; }
+#startCamera, #demoButton { display: block; margin: 1em auto; padding: .7em 1em; border: 0; border-radius: 6px; background: #04aa6d; color: #fff; cursor: pointer; }
+#demoButton { display: none; }
