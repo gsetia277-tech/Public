@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Badminton Pro</title>
+    <link rel="stylesheet" href="bulutangkis.css">
+</head>
+<body>
+    <div class="game-shell">
+        <header class="topbar">
+            <div class="brand">BADMINTON</div>
+            <div class="title">PRO LEAGUE</div>
+            <div class="topbar-actions">
+                <button id="startBtn" type="button">Dashboard</button>
+                <button id="backBtn" class="back-btn hidden" type="button">Back to Menu</button>
+            </div>
+        </header>
+
+        <div class="scoreboard">
+            <div class="score-box">
+                <span class="label">PLAYER</span>
+                <span id="playerScore">0</span>
+            </div>
+            <div class="divider"></div>
+            <div class="score-box">
+                <span class="label" id="cpuLabel">CPU</span>
+                <span id="cpuScore">0</span>
+            </div>
+        </div>
+
+        <canvas id="gameCanvas" width="960" height="560" aria-label="Game Bulu Tangkis"></canvas>
+
+        <div class="controls">
+            <span id="controlHint">Gerakkan raket dengan mouse atau tombol W / S</span>
+        </div>
+        <div id="statusText" class="status">Target skor: 5 poin</div>
+    </div>
+
+    <!-- dashboard overlay -->
+    <div id="dashboardOverlay" class="overlay dashboard-overlay">
+        <div class="dashboard-card">
+            <div class="dashboard-kicker">8 BIT SPORTS ARENA</div>
+            <h1>BADMINTON <span>PRO</span></h1>
+            <p class="dashboard-subtitle">Pertandingan cepat, kontrol presisi, dan skor sampai 5 poin.</p>
+
+            <div class="dashboard-stats">
+                <div class="dashboard-stat">
+                    <strong>5</strong>
+                    <span>Target Poin</span>
+                </div>
+                <div class="dashboard-stat">
+                    <strong>2</strong>
+                    <span>Mode Main</span>
+                </div>
+                <div class="dashboard-stat">
+                    <strong>10</strong>
+                    <span>Detik Countdown</span>
+                </div>
+            </div>
+
+            <div class="dashboard-details">
+                <div>
+                    <span class="detail-label">MODE</span>
+                    <strong>BOT atau PVP</strong>
+                </div>
+                <div>
+                    <span class="detail-label">KONTROL</span>
+                    <strong>W / S atau Mouse</strong>
+                </div>
+            </div>
+
+            <button id="dashboardStartBtn" class="dashboard-start" type="button">Mulai Bermain</button>
+        </div>
+    </div>
+
+    <div id="modeOverlay" class="overlay hidden">
+        <div class="overlay-card">
+            <h1>PILIH MODE</h1>
+            <div class="mode-buttons">
+                <button class="mode-btn" data-mode="bot" type="button">BOT</button>
+                <button class="mode-btn" data-mode="pvp" type="button">PVP</button>
+            </div>
+
+            <div id="pvpInstructions" class="pvp-instructions hidden">
+                <div class="player-key-box">
+                    <span class="player-name">Player 1</span>
+                    <span class="key-label">W / S</span>
+                </div>
+                <div class="player-key-box">
+                    <span class="player-name">Player 2</span>
+                    <span class="key-label">↑ / ↓</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- match start overlay -->
+    <div id="matchStartOverlay" class="overlay hidden" aria-live="polite">
+        <div class="match-start-card">
+            <div class="dashboard-kicker">MATCH READY</div>
+            <h2>Pertandingan Dimulai</h2>
+            <p id="matchStartText">Bersiap...</p>
+        </div>
+    </div>
+
+    <div id="resultOverlay" class="result-overlay hidden" aria-live="polite">
+        <div class="result-box">
+            <h2 id="resultTitle">Kamu Menang!</h2>
+            <p id="resultText">Skor akhir 5 - 3</p>
+            <div id="countdownText" class="countdown-text">Kembali ke menu dalam 10</div>
+            <div class="result-actions">
+                <button id="replayBtn" type="button">Main Lagi</button>
+                <button id="resultBackBtn" class="back-btn" type="button">Back to Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="bulutangkis.js"></script>
+</body>
+</html>
