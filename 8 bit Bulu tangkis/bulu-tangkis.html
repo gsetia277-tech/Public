@@ -13,7 +13,7 @@
             <div class="title">PRO LEAGUE</div>
             <div class="topbar-actions">
                 <button id="startBtn" type="button">Dashboard</button>
-                <button id="backBtn" class="back-btn hidden" type="button">Back to Menu</button>
+                <button id="backBtn" class="back-btn hidden" type="button">Pause</button>
             </div>
         </header>
 
@@ -101,6 +101,17 @@
             <div class="dashboard-kicker">MATCH READY</div>
             <h2>Pertandingan Dimulai</h2>
             <p id="matchStartText">Bersiap...</p>
+        </div>
+    </div>
+
+    <div id="pauseOverlay" class="overlay hidden" aria-live="polite">
+        <div class="pause-card">
+            <div class="dashboard-kicker">GAME PAUSED</div>
+            <h2>Permainan Dijeda</h2>
+            <div class="pause-actions">
+                <button id="resumeBtn" type="button">Lanjut</button>
+                <button id="pauseBackBtn" class="back-btn" type="button">Back to Menu</button>
+            </div>
         </div>
     </div>
 

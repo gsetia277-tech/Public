@@ -14,6 +14,9 @@ const modeOverlay = document.getElementById('modeOverlay');
     /* match start overlay elements */
 const matchStartOverlay = document.getElementById('matchStartOverlay');
 const matchStartText = document.getElementById('matchStartText');
+const pauseOverlay = document.getElementById('pauseOverlay');
+const resumeBtn = document.getElementById('resumeBtn');
+const pauseBackBtn = document.getElementById('pauseBackBtn');
 const resultOverlay = document.getElementById('resultOverlay');
 const resultTitle = document.getElementById('resultTitle');
 const resultText = document.getElementById('resultText');
@@ -65,6 +68,7 @@ let pointerY = field.height / 2;
 let playerScore = 0;
 let cpuScore = 0;
 let running = false;
+let paused = false;
 let gameOver = false;
 let mouseControlActive = false;
 let gameMode = 'bot';
@@ -105,7 +109,9 @@ function showDashboard() {
     dashboardOverlay.classList.remove('hidden');
     modeOverlay.classList.add('hidden');
     matchStartOverlay.classList.add('hidden');
+    pauseOverlay.classList.add('hidden');
     resultOverlay.classList.add('hidden');
+    paused = false;
     startBtn.classList.add('hidden');
     backBtn.classList.add('hidden');
 }
@@ -115,6 +121,7 @@ function showModeOverlay() {
     clearTimeout(matchLaunchTimer);
     modeOverlay.classList.remove('hidden');
     matchStartOverlay.classList.add('hidden');
+    pauseOverlay.classList.add('hidden');
     resultOverlay.classList.add('hidden');
     startBtn.classList.remove('hidden');
     backBtn.classList.add('hidden');
@@ -228,6 +235,7 @@ function startRound(direction = Math.random() < 0.5 ? -1 : 1) {
     if (gameOver) return;
 
     running = true;
+    paused = false;
     showPlayingButtons();
     hideResult();
     resetPositions();
@@ -391,19 +399,110 @@ function drawPaddle(x, y, width, height, color) {
 }
 
 function drawShuttle() {
+    const centerX = shuttle.x;
+    const centerY = shuttle.y;
+    const rotation = Math.atan2(shuttle.dy, shuttle.dx) || 0;
+
+    ctx.save();
+    ctx.translate(centerX, centerY);
+    ctx.rotate(rotation);
+    ctx.scale(0.9, 0.9);
+
+    ctx.fillStyle = 'rgba(0,0,0,0.14)';
     ctx.beginPath();
-    ctx.fillStyle = '#ffe082';
-    ctx.arc(shuttle.x, shuttle.y, shuttle.radius, 0, Math.PI * 2);
+    ctx.ellipse(0, 32, 24, 10, 0, 0, Math.PI * 2);
     ctx.fill();
 
+    const featherGradient = ctx.createLinearGradient(-55, -20, 55, 65);
+    featherGradient.addColorStop(0, '#ffffff');
+    featherGradient.addColorStop(0.4, '#f4f4f3');
+    featherGradient.addColorStop(0.75, '#eceeea');
+    featherGradient.addColorStop(1, '#dfe4df');
+
+    ctx.fillStyle = featherGradient;
+    ctx.strokeStyle = '#d9e0db';
+    ctx.lineWidth = 1.2;
+
+    for (let i = 0; i < 9; i += 1) {
+        const featherX = (i - 4) * 7;
+        const featherTipX = featherX * 1.45;
+        const featherTipY = -43 - Math.abs(featherX) * 0.08;
+        const featherWidth = 4.8;
+
+        ctx.beginPath();
+        ctx.moveTo(featherX * 0.42, 3);
+        ctx.quadraticCurveTo(
+            featherX - featherWidth,
+            -17,
+            featherTipX - featherWidth,
+            featherTipY + 5
+        );
+        ctx.quadraticCurveTo(
+            featherTipX,
+            featherTipY,
+            featherTipX + featherWidth,
+            featherTipY + 5
+        );
+        ctx.quadraticCurveTo(
+            featherX + featherWidth,
+            -17,
+            featherX * 0.42,
+            3
+        );
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(featherX * 0.42, 3);
+        ctx.lineTo(featherTipX, featherTipY + 4);
+        ctx.strokeStyle = '#cbd6cf';
+        ctx.lineWidth = 0.9;
+        ctx.stroke();
+    }
+
     ctx.beginPath();
-    ctx.strokeStyle = '#f4d35e';
-    ctx.lineWidth = 2;
-    ctx.moveTo(shuttle.x - 6, shuttle.y);
-    ctx.lineTo(shuttle.x + 6, shuttle.y);
-    ctx.moveTo(shuttle.x, shuttle.y - 6);
-    ctx.lineTo(shuttle.x, shuttle.y + 6);
+    ctx.moveTo(-12, -2);
+    ctx.lineTo(0, -28);
+    ctx.lineTo(12, -2);
+    ctx.lineTo(0, 16);
+    ctx.closePath();
+    ctx.fillStyle = '#fafcfb';
+    ctx.fill();
     ctx.stroke();
+
+    const headGradient = ctx.createRadialGradient(0, 14, 4, 0, 14, 24);
+    headGradient.addColorStop(0, '#ffffff');
+    headGradient.addColorStop(0.63, '#f5f6f5');
+    headGradient.addColorStop(1, '#dfe4df');
+
+    ctx.beginPath();
+    ctx.ellipse(0, 17, 16, 20, 0, 0, Math.PI * 2);
+    ctx.fillStyle = headGradient;
+    ctx.fill();
+    ctx.strokeStyle = '#d5ddd8';
+    ctx.stroke();
+
+    ctx.fillStyle = '#1a2b24';
+    ctx.fillRect(-13, 22, 26, 9);
+
+    ctx.beginPath();
+    ctx.ellipse(0, 26, 10, 6, 0, 0, Math.PI * 2);
+    ctx.fillStyle = '#edf1ee';
+    ctx.fill();
+    ctx.strokeStyle = '#d0d8d3';
+    ctx.stroke();
+
+    ctx.strokeStyle = '#c9d2ce';
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(-2, -24);
+    ctx.lineTo(-2, 16);
+    ctx.moveTo(2, -24);
+    ctx.lineTo(2, 16);
+    ctx.stroke();
+
+    ctx.restore();
 }
 
 function draw() {
@@ -414,9 +513,11 @@ function draw() {
 }
 
 function gameLoop() {
-    handlePlayerInput();
-    updateCpu();
-    updateShuttle();
+    if (!paused) {
+        handlePlayerInput();
+        updateCpu();
+        updateShuttle();
+    }
     draw();
     requestAnimationFrame(gameLoop);
 }
@@ -487,6 +588,21 @@ dashboardStartBtn.addEventListener('click', () => {
 });
 
 backBtn.addEventListener('click', () => {
+    if (!running || gameOver) {
+        return;
+    }
+    paused = true;
+    pauseOverlay.classList.remove('hidden');
+    setStatus('Permainan dijeda');
+});
+
+resumeBtn.addEventListener('click', () => {
+    paused = false;
+    pauseOverlay.classList.add('hidden');
+    setStatus(`Target skor: ${winScore} poin`);
+});
+
+pauseBackBtn.addEventListener('click', () => {
     clearInterval(countdownTimer);
     clearInterval(matchStartTimer);
     clearTimeout(matchLaunchTimer);
@@ -496,10 +612,11 @@ backBtn.addEventListener('click', () => {
     updateScore();
     gameOver = false;
     running = false;
+    paused = false;
     resetPositions();
     matchStartOverlay.classList.add('hidden');
     setStatus('Target skor: 5 poin');
-    showModeOverlay();
+    showDashboard();
 });
 
 modeButtons.forEach((button) => {
@@ -538,6 +655,7 @@ replayBtn.addEventListener('click', () => {
 });
 
 resultBackBtn.addEventListener('click', () => {
+    clearInterval(countdownTimer);
     clearTimeout(nextRoundTimer);
     playerScore = 0;
     cpuScore = 0;
@@ -546,7 +664,7 @@ resultBackBtn.addEventListener('click', () => {
     updateScore();
     resetPositions();
     setStatus('Target skor: 5 poin');
-    showModeOverlay();
+    showDashboard();
 });
 
 updateModeLabels();

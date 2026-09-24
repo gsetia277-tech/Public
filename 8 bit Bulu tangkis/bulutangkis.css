@@ -337,6 +337,31 @@ canvas {
     text-transform: uppercase;
 }
 
+.pause-card {
+    width: min(86vw, 460px);
+    padding: 32px 24px;
+    background: linear-gradient(145deg, rgba(18, 37, 55, 0.98), rgba(8, 19, 30, 0.98));
+    border: 4px solid var(--blue);
+    text-align: center;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+}
+
+.pause-card h2 {
+    margin: 12px 0 22px;
+    color: #f5fbff;
+    font-size: clamp(1.6rem, 5vw, 2.5rem);
+    text-transform: uppercase;
+}
+
+.pause-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.pause-actions button {
+    flex: 1;
+}
+
 #matchStartText {
     margin: 0;
     color: var(--yellow);
@@ -424,7 +449,8 @@ canvas {
 }
 
 @media (max-width: 420px) {
-    .result-actions {
+    .result-actions,
+    .pause-actions {
         flex-direction: column;
     }
 }
